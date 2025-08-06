@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+<!-- <template id="website_menu_nuevo_cliente" inherit_id="website.layout">
+  <xpath expr="//ul[contains(@class, 'navbar-nav')]" position="inside">
+    <li class="nav-item">
+      <a href="/nuevo_cliente" class="nav-link btn btn-outline-primary ml-2">
+        Registrarse
+      </a>
+    </li>
+  </xpath>
+</template> -->
+<record id="menu_info_newclient" model="website.menu">
+        <field name="name">Nuevos clientes</field>
+        <field name="url">/nuevo_cliente</field>
+        <field name="sequence" eval="85"/>
+        <field name="parent_id" ref="website.menu_site"/>
+        </record>
+
+<template id="template_nuevo_cliente_form" name="Formulario Nuevos Clientes">
+  <t t-call="website.layout">
+    <div class="container mt-5">
+      <form action="/nuevo_cliente/enviar" method="post" class="o_form">
+       <!-- Nombre y Local -->
+          <div class="col-md-6 mb-3">
+            <label for="name">Nombre completo</label>
+            <input type="text" name="name" id="name" class="form-control" required="required"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="local_name">Nombre del local</label>
+            <input type="text" name="local_name" id="local_name" class="form-control"/>
+          </div>
+
+          <!-- Ubicación -->
+          <div class="col-md-6 mb-3">
+            <label for="city">Localidad</label>
+            <input type="text" name="city" id="city" class="form-control"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="state_id">Provincia</label>
+            <select name="state_id" id="state_id" class="form-control">
+              <t t-foreach="states" t-as="state">
+                <option t-att-value="state.id"><t t-esc="state.name"/></option>
+              </t>
+            </select>
+          </div>
+
+          <!-- Dirección -->
+          <div class="col-md-6 mb-3">
+            <label for="street">Dirección</label>
+            <input type="text" name="street" id="street" class="form-control"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="zip">Código postal</label>
+            <input type="text" name="zip" id="zip" class="form-control"/>
+          </div>
+
+          <!-- Datos fiscales -->
+          <div class="col-md-6 mb-3">
+            <label for="afip_id">Responsabilidad ante AFIP</label>
+            <select name="afip_id" id="afip_id" class="form-control">
+              <t t-foreach="afip_types" t-as="afip">
+                <option t-att-value="afip.id"><t t-esc="afip.name"/></option>
+              </t>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="vat">CUIT</label>
+            <input type="hidden" name="id_type" value="CUIT"/>
+            <input type="text" name="vat" id="vat" class="form-control"/>
+          </div>
+
+          <!-- Contacto -->
+          <div class="col-md-6 mb-3">
+            <label for="mobile">Celular con WhatsApp</label>
+            <input type="text" name="mobile" id="mobile" class="form-control"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="phone">Teléfono</label>
+            <input type="text" name="phone" id="phone" class="form-control"/>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="email">Correo electrónico</label>
+            <input type="email" name="email" id="email" class="form-control"/>
+          </div>
+
+          <!-- Dirección de entrega -->
+          <div class="col-12">
+            <hr/>
+            <h5 class="mt-3">Dirección de Entrega</h5>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="entrega_street">Calle y altura</label>
+            <input type="text" name="entrega_street" id="entrega_street" class="form-control"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="entrega_zip">Código postal</label>
+            <input type="text" name="entrega_zip" id="entrega_zip" class="form-control"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="entrega_city">Localidad</label>
+            <input type="text" name="entrega_city" id="entrega_city" class="form-control"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="entrega_state_id">Provincia</label>
+            <select name="entrega_state_id" id="entrega_state_id" class="form-control">
+              <t t-foreach="states" t-as="state">
+                <option t-att-value="state.id"><t t-esc="state.name"/></option>
+              </t>
+            </select>
+          </div>
+
+          <!-- Comentarios -->
+          <div class="col-12">
+            <hr/>
+            <h5 class="mt-3">Información adicional</h5>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="transporte">Transporte preferido o expreso</label>
+            <input type="text" name="transporte" id="transporte" class="form-control"/>
+          </div>
+          <div class="col-md-12 mb-3">
+            <label for="trabaja_mercaderia">¿Estás trabajando con nuestra mercadería?</label>
+            <textarea name="trabaja_mercaderia" id="trabaja_mercaderia" class="form-control" rows="2"></textarea>
+          </div>
+          <div class="col-md-12 mb-4">
+            <label for="origen_producto">¿Cómo conociste nuestros productos / proveedor actual?</label>
+            <textarea name="origen_producto" id="origen_producto" class="form-control" rows="2"></textarea>
+          </div>
+
+          <!-- Botón enviar -->
+          <div class="col-12 text-center">
+            <button type="submit" class="btn btn-success btn-lg px-4">ENVIAR</button>
+          </div>
+
+      </form>
+    </div>
+  </t>
+</template>
+
+<template id="template_nuevo_cliente_gracias" name="Gracias por tu contacto">
+  <section class="container mt-4">
+    <h2>¡Gracias por registrarte!</h2>
+    <p>Tu solicitud fue recibida. Nos pondremos en contacto a la brevedad.</p>
+  </section>
+</template>
+
+
+
+</odoo>
