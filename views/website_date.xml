@@ -1,20 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-<!-- <template id="website_menu_nuevo_cliente" inherit_id="website.layout">
-  <xpath expr="//ul[contains(@class, 'navbar-nav')]" position="inside">
-    <li class="nav-item">
-      <a href="/nuevo_cliente" class="nav-link btn btn-outline-primary ml-2">
-        Registrarse
-      </a>
-    </li>
-  </xpath>
-</template> -->
+<!-- 
 <record id="menu_info_newclient" model="website.menu">
         <field name="name">Nuevos clientes</field>
         <field name="url">/nuevo_cliente</field>
         <field name="sequence" eval="85"/>
         <field name="parent_id" ref="website.menu_site"/>
-        </record>
+        </record> -->
+<record id="menu_info_newclient" model="website.menu">
+  <field name="name">Nuevos clientes</field>
+  <field name="url">/nuevo_cliente</field>
+  <field name="sequence" eval="85"/>
+</record>
 
 <template id="template_nuevo_cliente_form" name="Formulario Nuevos Clientes">
   <t t-call="website.layout">
@@ -58,7 +55,7 @@
           <div class="col-md-6 mb-3">
             <label for="afip_id">Responsabilidad ante AFIP</label>
             <select name="afip_id" id="afip_id" class="form-control">
-              <t t-foreach="afip_types" t-as="afip">
+             <t t-foreach="afip_responsabilities" t-as="afip">
                 <option t-att-value="afip.id"><t t-esc="afip.name"/></option>
               </t>
             </select>
@@ -118,14 +115,46 @@
             <label for="transporte">Transporte preferido o expreso</label>
             <input type="text" name="transporte" id="transporte" class="form-control"/>
           </div>
-          <div class="col-md-12 mb-3">
+          <!-- <div class="col-md-12 mb-3">
             <label for="trabaja_mercaderia">¿Estás trabajando con nuestra mercadería?</label>
             <textarea name="trabaja_mercaderia" id="trabaja_mercaderia" class="form-control" rows="2"></textarea>
           </div>
           <div class="col-md-12 mb-4">
             <label for="origen_producto">¿Cómo conociste nuestros productos / proveedor actual?</label>
             <textarea name="origen_producto" id="origen_producto" class="form-control" rows="2"></textarea>
+          </div> -->
+                    <!-- ¿Trabaja con mercadería? -->
+          <div class="col-md-12 mb-3">
+            <label>¿Estás trabajando con nuestra mercadería?</label><br/>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="trabaja_mercaderia" id="mercaderia_si" value="Sí" onchange="toggleOrigenPregunta('si')"/>
+              <label class="form-check-label" for="mercaderia_si">Sí</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="trabaja_mercaderia" id="mercaderia_no" value="No" onchange="toggleOrigenPregunta('no')"/>
+              <label class="form-check-label" for="mercaderia_no">No</label>
+            </div>
           </div>
+
+          <!-- Pregunta condicional: SI -->
+          <div class="col-md-12 mb-4" id="pregunta_si" style="display: none;">
+            <label for="origen_producto_si">¿A quién le compras o comprabas los repuestos?</label>
+            <textarea name="origen_producto_si" id="origen_producto_si" class="form-control" rows="2"></textarea>
+          </div>
+
+          <!-- Pregunta condicional: NO -->
+          <div class="col-md-12 mb-4" id="pregunta_no" style="display: none;">
+            <label for="origen_producto_no">¿Cómo conociste nuestros productos?</label>
+            <textarea name="origen_producto_no" id="origen_producto_no" class="form-control" rows="2"></textarea>
+          </div>
+
+          <!-- Script para mostrar/ocultar -->
+          <script>
+            function toggleOrigenPregunta(respuesta) {
+              document.getElementById('pregunta_si').style.display = respuesta === 'si' ? 'block' : 'none';
+              document.getElementById('pregunta_no').style.display = respuesta === 'no' ? 'block' : 'none';
+            }
+          </script>
 
           <!-- Botón enviar -->
           <div class="col-12 text-center">
@@ -138,11 +167,24 @@
 </template>
 
 <template id="template_nuevo_cliente_gracias" name="Gracias por tu contacto">
-  <section class="container mt-4">
-    <h2>¡Gracias por registrarte!</h2>
-    <p>Tu solicitud fue recibida. Nos pondremos en contacto a la brevedad.</p>
-  </section>
+  <t t-call="website.layout">
+    <div class="oe_structure">
+      <section class="container py-5">
+        <div class="row justify-content-center">
+          <div class="col-md-8 text-center">
+            <h1 class="display-4 mb-4 text-success">¡Gracias por registrarte!</h1>
+            <p class="lead mb-3">Tu solicitud fue recibida correctamente.</p>
+            <p class="mb-4">Nos pondremos en contacto a la brevedad para continuar con el proceso.</p>
+            <a href="/" class="btn btn-outline-primary btn-lg">
+              Volver a la página de inicio
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </t>  
 </template>
+
 
 
 
