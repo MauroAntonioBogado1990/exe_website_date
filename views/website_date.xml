@@ -19,65 +19,73 @@
       <form action="/nuevo_cliente/enviar" method="post" class="o_form">
        <!-- Nombre y Local -->
           <div class="col-md-6 mb-3">
-            <label for="name">Nombre completo</label>
+            <label for="name">Apellido y Nombre</label>
             <input type="text" name="name" id="name" class="form-control" required="required"/>
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="local_name">Nombre del local</label>
-            <input type="text" name="local_name" id="local_name" class="form-control"/>
-          </div>
-
-          <!-- Ubicación -->
-          <div class="col-md-6 mb-3">
-            <label for="city">Localidad</label>
-            <input type="text" name="city" id="city" class="form-control"/>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="state_id">Provincia</label>
-            <select name="state_id" id="state_id" class="form-control">
-              <t t-foreach="states" t-as="state">
-                <option t-att-value="state.id"><t t-esc="state.name"/></option>
-              </t>
-            </select>
-          </div>
-
-          <!-- Dirección -->
+      <!-- Dirección -->
           <div class="col-md-6 mb-3">
             <label for="street">Dirección</label>
-            <input type="text" name="street" id="street" class="form-control"/>
+            <input type="text" name="street" id="street" class="form-control" required="1"/>
           </div>
           <div class="col-md-6 mb-3">
             <label for="zip">Código postal</label>
-            <input type="text" name="zip" id="zip" class="form-control"/>
+            <input type="text" name="zip" id="zip" class="form-control" required="1"/>
+          </div>
+         <!-- Ubicación -->
+          <div class="col-md-6 mb-3">
+            <label for="city">Localidad</label>
+            <input type="text" name="city" id="city" class="form-control" required="1"/>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="state_id">Provincia</label>
+            <select name="state_id" id="state_id" class="form-control"  >
+              <t t-foreach="states" t-as="state">
+                <option t-att-value="state.id"><t t-esc="state.name" required="1"/></option>
+              </t>
+            </select>
+          </div>
+         <div class="col-md-6 mb-3">
+            <label for="city">Pais</label>
+            <input type="text" name="country" id="country" class="form-control" required="1"/>
           </div>
 
           <!-- Datos fiscales -->
           <div class="col-md-6 mb-3">
-            <label for="afip_id">Responsabilidad ante AFIP</label>
+            <label for="afip_id">Responsabilidad ante AFIP/ARCA</label>
             <select name="afip_id" id="afip_id" class="form-control">
              <t t-foreach="afip_responsabilities" t-as="afip">
-                <option t-att-value="afip.id"><t t-esc="afip.name"/></option>
+                <option t-att-value="afip.id"><t t-esc="afip.name" required="1"/></option>
               </t>
             </select>
           </div>
           <div class="col-md-6 mb-3">
-            <label for="vat">CUIT</label>
+            <label for="vat">CUIT (Sin Guiones)</label>
             <input type="hidden" name="id_type" value="CUIT"/>
-            <input type="text" name="vat" id="vat" class="form-control"/>
+            <input type="text" name="vat" id="vat" class="form-control"
+                  maxlength="11" pattern="\d{11}" title="Ingresá 11 dígitos sin guiones"
+                  required="1" oninput="this.value = this.value.replace(/\D/g, '').slice(0,11)"/>
           </div>
+      
+
+          
+         
+
+         
+
+          
 
           <!-- Contacto -->
           <div class="col-md-6 mb-3">
             <label for="mobile">Celular con WhatsApp</label>
-            <input type="text" name="mobile" id="mobile" class="form-control"/>
+            <input type="text" name="mobile" id="mobile" class="form-control" required="1"/>
           </div>
           <div class="col-md-6 mb-3">
             <label for="phone">Teléfono</label>
-            <input type="text" name="phone" id="phone" class="form-control"/>
+            <input type="text" name="phone" id="phone" class="form-control" required="1"/>
           </div>
           <div class="col-md-12 mb-3">
             <label for="email">Correo electrónico</label>
-            <input type="email" name="email" id="email" class="form-control"/>
+            <input type="email" name="email" id="email" class="form-control" required="1"/>
           </div>
 
           <!-- Dirección de entrega -->
@@ -86,22 +94,27 @@
             <h5 class="mt-3">Dirección de Entrega</h5>
           </div>
           <div class="col-md-6 mb-3">
+            <label for="local_name">Nombre del local</label>
+            <input type="text" name="local_name" id="local_name" class="form-control" required="1"/>
+          </div>
+
+          <div class="col-md-6 mb-3">
             <label for="entrega_street">Calle y altura</label>
-            <input type="text" name="entrega_street" id="entrega_street" class="form-control"/>
+            <input type="text" name="entrega_street" id="entrega_street" class="form-control"  required="1"/>
           </div>
           <div class="col-md-6 mb-3">
             <label for="entrega_zip">Código postal</label>
-            <input type="text" name="entrega_zip" id="entrega_zip" class="form-control"/>
+            <input type="text" name="entrega_zip" id="entrega_zip" class="form-control" required="1"/>
           </div>
           <div class="col-md-6 mb-3">
             <label for="entrega_city">Localidad</label>
-            <input type="text" name="entrega_city" id="entrega_city" class="form-control"/>
+            <input type="text" name="entrega_city" id="entrega_city" class="form-control" required="1"/>
           </div>
           <div class="col-md-6 mb-3">
             <label for="entrega_state_id">Provincia</label>
             <select name="entrega_state_id" id="entrega_state_id" class="form-control">
               <t t-foreach="states" t-as="state">
-                <option t-att-value="state.id"><t t-esc="state.name"/></option>
+                <option t-att-value="state.id"><t t-esc="state.name" required="1"/></option>
               </t>
             </select>
           </div>
@@ -112,9 +125,14 @@
             <h5 class="mt-3">Información adicional</h5>
           </div>
           <div class="col-md-12 mb-3">
-            <label for="transporte">Transporte preferido o expreso</label>
+            <label for="transporte">Transporte preferido o expreso(En caso de no ser de AMBA)</label>
             <input type="text" name="transporte" id="transporte" class="form-control"/>
           </div>
+          <div class="col-md-12 mb-3">
+            <label for="transporte">Horario de entrega(En caso de no ser de AMBA)</label>
+            <input type="text" name="hoario_transporte" id="horario_transporte" class="form-control"/>
+          </div>
+
           <!-- <div class="col-md-12 mb-3">
             <label for="trabaja_mercaderia">¿Estás trabajando con nuestra mercadería?</label>
             <textarea name="trabaja_mercaderia" id="trabaja_mercaderia" class="form-control" rows="2"></textarea>
@@ -127,11 +145,11 @@
           <div class="col-md-12 mb-3">
             <label>¿Estás trabajando con nuestra mercadería?</label><br/>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="trabaja_mercaderia" id="mercaderia_si" value="Sí" onchange="toggleOrigenPregunta('si')"/>
+              <input class="form-check-input" type="radio" name="trabaja_mercaderia" id="mercaderia_si" value="Sí" onchange="toggleOrigenPregunta('si')" required="1"/>
               <label class="form-check-label" for="mercaderia_si">Sí</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="trabaja_mercaderia" id="mercaderia_no" value="No" onchange="toggleOrigenPregunta('no')"/>
+              <input class="form-check-input" type="radio" name="trabaja_mercaderia" id="mercaderia_no" value="No" onchange="toggleOrigenPregunta('no')" required="1"/>
               <label class="form-check-label" for="mercaderia_no">No</label>
             </div>
           </div>
